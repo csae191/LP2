@@ -1,0 +1,27 @@
+#AES - ECB MODE
+!pip install pycryptodome
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+from Crypto.Random import get_random_bytes
+
+# Generate a random  key
+key_size = int(input("Enter key Size 16,24 or 32:"))
+key = get_random_bytes(key_size)
+
+# Create a cipher object with the key and ECB mode
+cipher = AES.new(key, AES.MODE_ECB)
+
+# Encrypt some data
+str = input("Enter data that you want to encrypt:")
+byte_data = bytes(str,'utf-8')
+data = pad(byte_data, 16)
+ciphertext = cipher.encrypt(data)
+
+# Decrypt the data with the same key and ECB mode
+cipher = AES.new(key, AES.MODE_ECB)
+plaintext = cipher.decrypt(ciphertext)
+
+# Print the results
+print("Key:", key.hex())
+print("Ciphertext:", ciphertext.hex())
+print("Plaintext:", plaintext.decode())
